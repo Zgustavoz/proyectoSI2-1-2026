@@ -1,6 +1,8 @@
 # ============================================================
-#  PYTHON / DJANGO
+# PYTHON / DJANGO
 # ============================================================
+
+# Archivos compilados / caches → NO subir
 __pycache__/
 *.py[cod]
 *$py.class
@@ -9,42 +11,34 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-eggs/
-parts/
-var/
-sdist/
-develop-eggs/
-.installed.cfg
-lib/
-lib64/
 
-# Entornos virtuales
+# Entornos virtuales → NO subir
 .env
-.venv
+.venv/
 env/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
-# Django
-*.log
+# Archivos de configuración local → NO subir
 local_settings.py
 db.sqlite3
-db.sqlite3-journal
-media/
-staticfiles/
-static/
 
-# Migraciones (opcional — descomenta si no quieres subirlas)
+# Archivos generados / media → NO subir
+media/
+# Static generado por collectstatic → normalmente NO subir
+staticfiles/
+# Si tienes CSS/JS base del proyecto, SÍ subir en 'static/'
+
+# Migraciones → OPCIONAL
 # */migrations/*.py
 # !*/migrations/__init__.py
+# Puedes subir migraciones iniciales si quieres que otros no las creen desde cero
 
-# Celery
+# Celery → NO subir
 celerybeat-schedule
 celerybeat.pid
 
-# Coverage
+# Coverage / testing → NO subir
 htmlcov/
 .tox/
 .coverage
@@ -54,24 +48,23 @@ nosetests.xml
 coverage.xml
 *.cover
 .hypothesis/
+.pytest_cache/
 
-# mypy
+# mypy → NO subir
 .mypy_cache/
 .dmypy.json
 dmypy.json
 
-# pytest
-.pytest_cache/
+# ============================================================
+# REACT + VITE
+# ============================================================
 
-# ============================================================
-#  REACT + VITE
-# ============================================================
+# Dependencias y builds → NO subir
 node_modules/
 dist/
 dist-ssr/
-*.local
 
-# Logs
+# Logs → NO subir
 logs/
 *.log
 npm-debug.log*
@@ -80,7 +73,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Editor
+# Editor → NO subir
 .vscode/*
 !.vscode/extensions.json
 .idea/
@@ -90,22 +83,24 @@ lerna-debug.log*
 *.sln
 *.sw?
 
-# Variables de entorno frontend
+# Variables de entorno frontend → NO subir
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+!.env.example  # SÍ subir para que otros sepan las variables necesarias
 
-# Cache
+# Cache → NO subir
 .eslintcache
 .stylelintcache
 *.tsbuildinfo
 
 # ============================================================
-#  FLUTTER / DART
+# FLUTTER / DART
 # ============================================================
-# Dependencias
+
+# Dependencias → NO subir
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -113,7 +108,7 @@ lerna-debug.log*
 .pub-cache/
 .pub/
 
-# Build
+# Build → NO subir
 build/
 *.apk
 *.aab
@@ -121,18 +116,15 @@ build/
 *.dSYM.zip
 *.dSYM
 
-# Android
+# Android → NO subir archivos locales o keystores
 **/android/local.properties
 **/android/.gradle/
 **/android/captures/
-**/android/gradlew
-**/android/gradlew.bat
-**/android/gradle/
 **/android/key.properties
 **/android/**/*.keystore
 **/android/**/*.jks
 
-# iOS
+# iOS → NO subir Pods ni archivos generados
 **/ios/Pods/
 **/ios/.symlinks/
 **/ios/Flutter/App.framework
@@ -142,32 +134,39 @@ build/
 **/ios/Flutter/ephemeral/
 **/ios/Runner/GeneratedPluginRegistrant.*
 
-# macOS
+# macOS → NO subir archivos generados
 **/macos/Flutter/GeneratedPluginRegistrant.swift
 **/macos/Flutter/ephemeral/
 
-# Windows
+# Windows → NO subir archivos generados
 **/windows/flutter/generated_plugin_registrant.cc
 **/windows/flutter/generated_plugin_registrant.h
 **/windows/flutter/generated_plugins.cmake
 
-# Web
+# Web → NO subir archivos generados
 **/web/flutter_service_worker.js
 **/web/flutter.js
 
-# Coverage
+# Coverage → NO subir
 coverage/
 lcov.info
 
+# Código y assets → SÍ subir
+# Flutter: lib/, assets/
+# Django: apps/, templates/, static/ (archivos propios)
+# React: src/, public/ (archivos propios)
+
 # ============================================================
-#  GENERAL
+# GENERAL
 # ============================================================
+
+# Sistema / temporales → NO subir
 .DS_Store
 Thumbs.db
 *.bak
 *.tmp
 *.swp
 *.swo
-.env*
-!.env.example
+
+# Archivos sensibles → NO subir
 secrets/
