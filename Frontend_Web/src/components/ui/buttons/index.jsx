@@ -1,0 +1,6 @@
+export { default as Btn          } from './Btn';
+export { default as BackButton   } from './BackButton';
+export { default as CreateButton } from './CreateButton';
+export { default as EditButton   } from './EditButton';
+export { default as DeleteButton } from './DeleteButton';
+export { default as EstadoButton } from './EstadoButton';

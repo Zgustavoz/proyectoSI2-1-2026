@@ -1,0 +1,26 @@
+### Login
+POST http://localhost:8000/usuarios/token/
+Content-Type: application/json
+
+{
+  "username": "gustavo",
+  "password": "2004"
+}
+
+### Admin
+GET http://localhost:8000/admin/
+
+### Perfil (con cookie)
+GET http://localhost:8000/usuarios/perfil/
+
+### Listar usuarios
+GET http://localhost:8000/usuarios/usuarios/
+
+### Listar roles
+GET http://localhost:8000/usuarios/roles/
+
+### Listar permisos
+GET http://localhost:8000/usuarios/permisos/
+
+### Logout
+POST http://localhost:8000/usuarios/logout/
