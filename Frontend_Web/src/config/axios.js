@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instancia = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000' || 'http://192.168.0.11:8000',
   timeout: 30000,
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },

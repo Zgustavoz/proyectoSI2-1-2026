@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import {
-  LayoutDashboard, Users, Shield, LogOut,
+  LayoutDashboard, Users, Shield, LogOut, ClipboardList,
   ChevronRight, Menu, X, ShoppingBag, Key, ChevronDown
 } from "lucide-react";
 import { AnimatePresence, m, LazyMotion, domAnimation, useReducedMotion } from "framer-motion";
@@ -43,6 +43,7 @@ export const Sidebar = () => {
         { title: "Usuarios",  path: "/dashboard/usuarios", icon: Users,  roles: ["admin","empleado"] },
         { title: "Roles",     path: "/dashboard/roles",    icon: Shield, roles: ["admin"] },
         { title: "Permisos",  path: "/dashboard/permisos", icon: Key,    roles: ["admin"] },
+        { title: "Bitácora",  path: "/dashboard/bitacora", icon: ClipboardList, roles: ["admin"] }
       ],
     },
   ];

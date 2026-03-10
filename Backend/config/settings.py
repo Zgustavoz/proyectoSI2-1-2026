@@ -1,4 +1,5 @@
 # Backend/config/settings.py
+#pylint: disable=W0611
 """
 Configuración principal de Django para el proyecto Proyecto1.
 Incluye settings de desarrollo, producción, base de datos, autenticación y CORS.
@@ -9,7 +10,7 @@ from datetime import timedelta
 
 # Librerías de terceros
 from decouple import config
-# import dj_database_url  ← si lo necesitas en producción
+import dj_database_url
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'usuarios.middleware.RequestMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -132,7 +134,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_COOKIE': 'access_token',
-    'AUTH_COOKIE_REFRESH': 'refresh_token',
+    'AUTH_COOKIE_REFRESH': 'refresh_token', 
     'AUTH_COOKIE_SECURE': config('AUTH_COOKIE_SECURE', default=False, cast=bool),
     'AUTH_COOKIE_HTTP_ONLY': True,
     'AUTH_COOKIE_SAMESITE': config('AUTH_COOKIE_SAMESITE', default='Lax'),
@@ -186,4 +188,12 @@ USE_I18N = True
 USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#FRONTEND
 FRONTEND_URL = config('FRONTEND_URL')
+
+#BITACORA
+BITACORA_FERNET_KEY = config('BITACORA_FERNET_KEY')
+BITACORA_PASSWORD   = config('BITACORA_PASSWORD')
+
+# from cryptography.fernet import Fernet
+# print(Fernet.generate_key().decode())

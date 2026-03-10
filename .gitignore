@@ -170,3 +170,6 @@ Thumbs.db
 
 # Archivos sensibles → NO subir
 secrets/
+.vscode
+_DB
+comandosdocker.txt

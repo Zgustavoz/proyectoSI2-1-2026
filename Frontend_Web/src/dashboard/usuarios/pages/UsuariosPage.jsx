@@ -6,8 +6,8 @@ import { UsuariosTable } from '../components/UsuariosTable';
 import { CrearUsuarioModal } from '../components/CrearUsuarioModal';
 import { EditarUsuarioModal } from '../components/EditarUsuarioModal';
 import { Loading } from '../../../components/Loading';
-import { Users, Plus, Search, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { CreateButton } from '../../../components/ui/buttons/index';
+import { Users, Search, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { CreateButton, ExportButton } from '../../../components/ui/buttons/index';
 
 export const UsuariosPage = () => {
   const { tienePermiso } = useAuth();
@@ -74,22 +74,46 @@ export const UsuariosPage = () => {
     <div className="p-6">
 
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex items-start justify-between mb-6">
+
+        {/* Título */}
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-            <Users className="w-6 h-6" />
+          <h1 className="text-2xl font-semibold text-gray-900 flex items-center gap-2">
+            <Users className="w-6 h-6 text-gray-700" />
             Usuarios
           </h1>
-          <p className="text-gray-500 text-sm mt-1">
-            {totalUsuarios} usuarios registrados
+
+          <p className="text-sm text-gray-500 mt-1">
+            Gestión de usuarios del sistema · {totalUsuarios} registrados
           </p>
         </div>
-        <CreateButton
-          onClick={() => setModalCrear(true)}
-          disabled={!puedeCrear}
-        >
-          Nuevo Usuario
-        </CreateButton>
+
+        {/* Acciones */}
+        <div className="flex items-center gap-3">
+
+          <ExportButton
+            empresa="MI EMPRESA"
+            titulo="Reporte de Usuarios"
+            metadata={{
+              'Total usuarios': totalUsuarios, 'Filtro rol': rolFiltro || 'Todos', 'Filtro estado': estadoFiltro || 'Todos',
+              'Fecha desde': fechaDesde || '-', 'Fecha hasta': fechaHasta || '-',
+            }}
+            secciones={[{
+              titulo: 'Usuarios',
+              columnas: ['Usuario', 'Email', 'Nombre', 'Apellido', 'Estado'],
+              datos: listaUsuarios,
+              mapearDatos: (u) => [ u.username, u.email, u.first_name, u.last_name, u.is_active ? 'Activo' : 'Inactivo', ],
+            }]}
+          />
+
+          <CreateButton
+            onClick={() => setModalCrear(true)}
+            label="Nuevo Usuario"
+            disabled={!puedeCrear}
+          />
+
+        </div>
+
       </div>
 
       {/* Filtros */}

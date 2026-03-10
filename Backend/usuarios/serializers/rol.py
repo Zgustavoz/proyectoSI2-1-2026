@@ -1,4 +1,4 @@
-# pylint: disable=C0114,C0115,C0116,no-member
+# pylint: disable=C0114,C0115,C0116,no-member,W0212
 from rest_framework import serializers
 from ..models import Rol, Permiso
 from .permiso import PermisoSerializer
@@ -29,3 +29,21 @@ class RolSerializer(serializers.ModelSerializer):
                 return value
             raise serializers.ValidationError("Ya existe un rol con este nombre")
         return value
+
+    def create(self, validated_data):
+        permisos_data = validated_data.pop('permisos', [])
+        rol = Rol.objects.create(**validated_data)
+        if permisos_data:
+            rol.permisos.set(permisos_data)
+        rol._skip_signal = True
+        rol.save()
+        return rol
+
+    def update(self, instance, validated_data):
+        permisos_data = validated_data.pop('permisos', None)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        if permisos_data is not None:
+            instance.permisos.set(permisos_data)
+        instance.save()
+        return instance

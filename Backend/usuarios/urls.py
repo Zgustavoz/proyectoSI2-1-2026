@@ -13,6 +13,8 @@ from .views import (
     UsuarioViewSet,
     RolViewSet,
     PermisoViewSet,
+    BitacoraListView,
+    VerificarPasswordBitacoraView,
 )
 
 router = DefaultRouter()
@@ -37,6 +39,11 @@ urlpatterns = [
     # Google OAuth
     path('auth/google/', GoogleLoginView.as_view(), name='google_login'),
 
+    #Auditoria
+    path('bitacora/', BitacoraListView.as_view(), name='bitacora'),
+    path('bitacora/verificar/', VerificarPasswordBitacoraView.as_view(), name='bitacora_verificar'),
+
     # CRUD
     path('', include(router.urls)),
+    
 ]

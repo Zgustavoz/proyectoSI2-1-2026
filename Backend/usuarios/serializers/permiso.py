@@ -1,5 +1,5 @@
 #pylint: disable=no-member
-"""z"""
+"""permiso"""
 from rest_framework import serializers
 from ..models import Permiso
 

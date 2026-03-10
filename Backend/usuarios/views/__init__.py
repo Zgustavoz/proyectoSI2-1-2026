@@ -11,3 +11,4 @@ from .auth_cookies import CookieTokenObtainPairView, CookieTokenRefreshView, Coo
 from .usuario import UsuarioViewSet
 from .rol import RolViewSet
 from .permiso import PermisoViewSet
+from .bitacora import BitacoraListView, VerificarPasswordBitacoraView

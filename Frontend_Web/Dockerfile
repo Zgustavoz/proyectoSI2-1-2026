@@ -3,15 +3,14 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
 
-ARG VITE_API_URL
-ARG VITE_GOOGLE_CLIENT_ID
-ENV VITE_API_URL=$VITE_API_URL
-ENV VITE_GOOGLE_CLIENT_ID=$VITE_GOOGLE_CLIENT_ID
+# Declarar variables directamente
+ENV VITE_API_URL=http://localhost:8000
+ENV VITE_GOOGLE_CLIENT_ID=395832852196-dmo7tvcbi8acsutcf7s7a2cpcqv21298.apps.googleusercontent.com
 
 RUN npm run build
 
@@ -20,16 +19,16 @@ FROM nginx:alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-RUN echo 'server { \
-    listen 80; \
-    server_name _; \
-    root /usr/share/nginx/html; \
-    index index.html; \
-    location / { \
-        try_files $uri $uri/ /index.html; \
-    } \
-}' > /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
+RUN printf "server {\n\
+  listen 80;\n\
+  server_name _;\n\
+  root /usr/share/nginx/html;\n\
+  index index.html;\n\
+  location / {\n\
+    try_files \$uri \$uri/ /index.html;\n\
+  }\n\
+}" > /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]

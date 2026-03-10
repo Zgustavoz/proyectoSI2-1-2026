@@ -1,9 +1,8 @@
-# pylint: disable=C0114,C0115,C0116,no-member
+# pylint: disable=C0114,C0115,C0116,no-member,W0212
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
-from ..models import Usuario, Rol
+from ..models import Usuario, Rol, Permiso
 from .rol import RolSerializer
-from ..models import Permiso
 
 class UsuarioSerializer(serializers.ModelSerializer):
     roles_info = RolSerializer(source='roles', many=True, read_only=True)
@@ -20,7 +19,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
         validators=[validate_password]
     )
     permisos = serializers.SerializerMethodField()
-    permisos_nombres = serializers.SerializerMethodField()  # ← nuevo
+    permisos_nombres = serializers.SerializerMethodField()
 
     class Meta:
         model = Usuario
@@ -38,7 +37,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
     def get_permisos(self, obj):
         return obj.get_permisos()
 
-    def get_permisos_nombres(self, obj):  # ← nuevo
+    def get_permisos_nombres(self, obj):
         if obj.es_admin:
             return list(Permiso.objects.filter(is_active=True).values_list('nombre', flat=True))
         return list(
@@ -50,18 +49,19 @@ class UsuarioSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         roles_data = validated_data.pop('roles', [])
-        password = validated_data.pop('password', None)
-        user = Usuario.objects.create_user(**validated_data)
+        password   = validated_data.pop('password', None)
+        user       = Usuario.objects.create_user(**validated_data)
         if password:
             user.set_password(password)
         if roles_data:
             user.roles.set(roles_data)
+        user._skip_signal = True
         user.save()
         return user
 
     def update(self, instance, validated_data):
         roles_data = validated_data.pop('roles', None)
-        password = validated_data.pop('password', None)
+        password   = validated_data.pop('password', None)
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         if password:
